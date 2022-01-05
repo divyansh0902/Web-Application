@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 
@@ -21,7 +21,7 @@ def topics(request):
 @login_required
 def topic(request, topic_id):
     #show a single and all its entries
-    topic = Topic.objects.get(id=topic_id) #query database by asking for Topic objects,sorted by date_added attribute
+    topic = get_object_or_404(Topic, id=topic_id) #query database by asking for Topic objects,sorted by date_added attribute
     #make sure topic belongs to current user
     if topic.owner != request.user:
         raise Http404
